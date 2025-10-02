@@ -1,11 +1,5 @@
 "use client";
 
-// Disable prerendering/static export for this route so that Supabase
-// env vars are not required at build time. This ensures the page renders
-// dynamically at request time on the server/runtime.
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
-
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Mail, Lock, Eye, EyeOff, ArrowRight } from "lucide-react";
