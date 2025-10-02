@@ -95,9 +95,9 @@ export default function LandingPage() {
   }
 
   return (
-    <div ref={ref} className="min-h-screen bg-zinc-950 text-zinc-50">
-      <header className="sticky top-0 z-20 isolate border-b border-white/10 bg-black" style={{ backgroundColor: "#000" }}>
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+    <div ref={ref} className="min-h-screen bg-black text-zinc-50">
+      <header className="sticky top-0 z-50 isolate border-b border-white/10 bg-black" style={{ backgroundColor: "#000" }}>
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 sm:px-6 py-3 sm:py-4">
           <div className="flex items-center gap-2">
             <Image src="/jony-logo.png" alt="Jony logo" width={24} height={24} />
             <span className="font-semibold">Jony</span>
@@ -107,11 +107,11 @@ export default function LandingPage() {
             <a href="#demo" className="text-zinc-300 hover:text-white">Demo</a>
             <a href="#waitlist" className="text-zinc-300 hover:text-white">Waitlist</a>
           </nav>
-          <a href="/onboarding" className="rounded-md bg-white px-3 py-1.5 text-sm font-bold text-zinc-900">Try it now</a>
+          <a href="/onboarding" className="rounded-md bg-white px-3 py-1.5 text-xs sm:text-sm font-bold text-zinc-900">Try it now</a>
         </div>
       </header>
 
-      <section className="relative overflow-hidden bg-[radial-gradient(1200px_600px_at_60%_-10%,rgba(99,102,241,0.25),transparent_60%),radial-gradient(1000px_500px_at_10%_20%,rgba(26,188,254,0.18),transparent_55%),#0b0d10]">
+      <section className="relative overflow-hidden" style={{ backgroundColor: "#000" }}>
         {/* Noise overlay for texture */}
         <div 
           className="pointer-events-none absolute inset-0 opacity-[0.06] mix-blend-overlay z-5"
@@ -122,11 +122,15 @@ export default function LandingPage() {
         />
         
         {/* 3D Canvas background (above gradient, below content) */}
-        {mounted && (
-          <div className="pointer-events-none absolute inset-0 z-10">
-            <HeroScene />
-          </div>
-        )}
+        <div className="pointer-events-none absolute inset-0 z-10">
+          {/* Fallback black until mounted to avoid flash */}
+          {!mounted && <div className="w-full h-full bg-black" />}
+          {mounted && (
+            <div className="block w-full h-full min-h-[420px] sm:min-h-0">
+              <HeroScene />
+            </div>
+          )}
+        </div>
         
         {/* Subtle animated aurora background with parallax (furthest back) */}
         <div className="pointer-events-none absolute inset-0 z-0">
@@ -157,11 +161,11 @@ export default function LandingPage() {
           </motion.div>
         </div>
 
-        <div className="mx-auto max-w-6xl px-6 pt-28 pb-20">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 pt-24 sm:pt-28 pb-16 sm:pb-20">
           {/* Full-width title block */}
           <motion.div style={{ opacity }} className="relative z-20 mx-auto max-w-3xl text-center -top-1">
-            <p className="text-sm uppercase tracking-[0.3em] text-white/80">The first AI agent with <span className="text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]">taste</span></p>
-            <h1 className="mt-4 text-balance text-6xl font-semibold leading-[1.05] md:text-7xl" style={{ fontFamily: 'SentinelBlack, ui-sans-serif, system-ui' }}>
+            <p className="text-xs sm:text-sm uppercase tracking-[0.25em] sm:tracking-[0.3em] text-white/80">The first AI agent with <span className="text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]">taste</span></p>
+            <h1 className="mt-3 sm:mt-4 text-balance text-4xl sm:text-6xl font-semibold leading-tight sm:leading-[1.05] md:text-7xl" style={{ fontFamily: 'SentinelBlack, ui-sans-serif, system-ui' }}>
               Design quality UI. From a prompt.
             </h1>
           </motion.div>
@@ -169,8 +173,8 @@ export default function LandingPage() {
           {/* Auto-typed rotating sentences between title and CTA */}
           <div className="mt-6 relative -top-1">
             <div className="relative z-20">
-              <div className="mx-auto max-w-4xl text-center h-20 flex items-center justify-center">
-                <p className="text-2xl text-zinc-300" style={{ fontFamily: 'SentinelMedium, ui-sans-serif, system-ui' }}>
+              <div className="mx-auto max-w-4xl text-center h-16 sm:h-20 flex items-center justify-center px-1">
+                <p className="text-lg sm:text-2xl text-zinc-300" style={{ fontFamily: 'SentinelMedium, ui-sans-serif, system-ui' }}>
                   <span style={{ fontFamily: 'SentinelBlack, ui-sans-serif, system-ui' }}>{staticPrefix}</span>{typedDynamic}
                   <span className="inline-block w-px translate-y-px bg-zinc-400 align-middle animate-[caret-blink_0.7s_steps(1,end)_infinite]" style={{ height: "1em" }} />
                 </p>
@@ -190,27 +194,27 @@ export default function LandingPage() {
             {/* Subtle radial scrim to preserve text contrast over bright shapes */}
             <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.35),transparent_60%)]" />
             <div className="mx-auto max-w-4xl text-center">
-              <h2 className="text-4xl font-semibold mb-4" style={{ fontFamily: 'SentinelSemiBold, ui-sans-serif, system-ui' }}>Get early access</h2>
-              <p className="mt-3 text-lg text-zinc-200 drop-shadow-[0_0_8px_rgba(0,0,0,0.35)]" style={{ fontFamily: 'SentinelMedium, ui-sans-serif, system-ui' }}>Be among the first to try Jony.</p>
+              <h2 className="text-3xl sm:text-4xl font-semibold mb-3 sm:mb-4" style={{ fontFamily: 'SentinelSemiBold, ui-sans-serif, system-ui' }}>Get early access</h2>
+              <p className="mt-2 sm:mt-3 text-base sm:text-lg text-zinc-200 drop-shadow-[0_0_8px_rgba(0,0,0,0.35)]" style={{ fontFamily: 'SentinelMedium, ui-sans-serif, system-ui' }}>Be among the first to try Jony.</p>
               
               {/* Waitlist form container (no blur/box) */}
-              <div className="mt-6">
-                <form onSubmit={joinWaitlist} className="space-y-4">
+              <div className="mt-5 sm:mt-6">
+                <form onSubmit={joinWaitlist} className="space-y-3 sm:space-y-4">
                   {/* InputWithButton layout from shadcn */}
-                  <div className="flex w-full items-center gap-2">
+                  <div className="flex w-full items-center gap-2 flex-col sm:flex-row">
                     <Input
                       type="email"
                       required
                       placeholder="Your Email Address"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="flex-1 h-14 text-lg bg-black/60 border-white/20 text-white placeholder:text-white/50 focus-visible:ring-white/20 focus-visible:border-white/40 rounded-xl"
+                      className="flex-1 h-14 sm:h-14 text-lg sm:text-lg bg-black/60 border-white/20 text-white placeholder:text-base sm:placeholder:text-lg placeholder:text-white/50 placeholder:[font-family:SentinelBook,ui-sans-serif,system-ui] focus-visible:ring-white/20 focus-visible:border-white/40 rounded-xl w-full"
                     />
                     <Button
                       type="submit"
                       disabled={status === "loading"}
                       size="lg"
-                      className="h-14 px-6 text-lg font-semibold bg-white text-black hover:bg-zinc-100 shadow-sm transition rounded-xl border border-white/20"
+                      className="h-12 sm:h-14 px-5 sm:px-6 text-base sm:text-lg font-semibold bg-white text-black hover:bg-zinc-100 shadow-sm transition rounded-xl border border-white/20 w-full sm:w-auto"
                     >
                       {status === "loading" ? (
                         <>
@@ -253,7 +257,7 @@ export default function LandingPage() {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.8 }}
-            className="relative z-20 mt-32"
+            className="relative z-20 mt-24 sm:mt-32"
           >
             <div className="mx-auto max-w-5xl text-center">
               <motion.h2 
@@ -261,7 +265,7 @@ export default function LandingPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                className="text-4xl md:text-5xl font-semibold mb-4" 
+                className="text-3xl sm:text-4xl md:text-5xl font-semibold mb-3 sm:mb-4" 
                 style={{ fontFamily: 'SentinelSemiBold, ui-sans-serif, system-ui' }}
               >
                 How Jony works
@@ -271,7 +275,7 @@ export default function LandingPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.4 }}
-                className="text-xl text-zinc-400 mb-16" 
+                className="text-lg sm:text-xl text-zinc-400 mb-10 sm:mb-16" 
                 style={{ fontFamily: 'SentinelBook, ui-sans-serif, system-ui' }}
               >
                 Three simple steps to design-quality UI
@@ -284,16 +288,16 @@ export default function LandingPage() {
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: 1.4 }}
-                className="mt-16"
+                transition={{ duration: 0.5, delay: 0.5 }}
+                className="mt-12 sm:mt-16"
               >
-                <p className="text-lg text-zinc-400 mb-6" style={{ fontFamily: 'SentinelBook, ui-sans-serif, system-ui' }}>
+                <p className="text-base sm:text-lg text-zinc-400 mb-5 sm:mb-6" style={{ fontFamily: 'SentinelBook, ui-sans-serif, system-ui' }}>
                   Ready to create something beautiful?
                 </p>
                 <Button
                   asChild
                   size="lg"
-                  className="h-12 px-8 text-lg font-semibold bg-gradient-to-r from-white via-white to-gray-100 text-black hover:from-gray-50 hover:via-gray-50 hover:to-gray-200 shadow-lg hover:shadow-xl transition-all duration-200 rounded-xl border border-white/20"
+                  className="h-11 sm:h-12 px-6 sm:px-8 text-base sm:text-lg font-semibold bg-gradient-to-r from-white via-white to-gray-100 text-black hover:from-gray-50 hover:via-gray-50 hover:to-gray-200 shadow-lg hover:shadow-xl transition-all duration-200 rounded-xl border border-white/20"
                 >
                   <a href="/onboarding">
                     Start with Jony
@@ -307,16 +311,16 @@ export default function LandingPage() {
           </motion.div>
 
           {/* Spacing after How it Works */}
-          <div className="mt-24" />
+          <div className="mt-16 sm:mt-24" />
         </div>
 
       </section>
 
       <footer className="border-t border-white/10">
-        <div className="mx-auto max-w-6xl px-6 py-12 text-xs text-zinc-500">
-          <div className="flex flex-wrap items-center justify-between gap-4">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 py-10 sm:py-12 text-[11px] sm:text-xs text-zinc-500">
+          <div className="flex flex-wrap items-center justify-between gap-3 sm:gap-4">
             <span>© {new Date().getFullYear()} Jony</span>
-            <div className="flex gap-4">
+            <div className="flex gap-3 sm:gap-4">
               <a className="hover:text-zinc-300" href="#features">Features</a>
               <a className="hover:text-zinc-300" href="#demo">Demo</a>
               <a className="hover:text-zinc-300" href="#waitlist">Waitlist</a>

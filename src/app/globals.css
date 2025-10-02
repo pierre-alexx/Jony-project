@@ -4,7 +4,7 @@
 
 @font-face {
   font-family: "SentinelBlack";
-  src: url("/font/sentinel-black.otf") format("opentype");
+  src: url("/font/Sentinel-black.otf") format("opentype");
   font-weight: 100 900;
   font-style: normal;
   font-display: swap;
@@ -12,7 +12,7 @@
 
 @font-face {
   font-family: "SentinelBlack";
-  src: url("/font/sentinel-black-italic.otf") format("opentype");
+  src: url("/font/Sentinel-black-italic.otf") format("opentype");
   font-weight: 100 900;
   font-style: italic;
   font-display: swap;
@@ -21,7 +21,7 @@
 /* Additional Sentinel weights */
 @font-face {
   font-family: "SentinelBook";
-  src: url("/font/sentinel-book.otf") format("opentype");
+  src: url("/font/Sentinel-book.otf") format("opentype");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -29,7 +29,7 @@
 
 @font-face {
   font-family: "SentinelSemiBold";
-  src: url("/font/sentinel-semibold.otf") format("opentype");
+  src: url("/font/Sentinel-semibold.otf") format("opentype");
   font-weight: 600;
   font-style: normal;
   font-display: swap;
@@ -37,7 +37,7 @@
 
 @font-face {
   font-family: "SentinelMedium";
-  src: url("/font/Sentinel-Medium.otf") format("opentype");
+  src: url("/font/Sentinel-medium.otf") format("opentype");
   font-weight: 500;
   font-style: normal;
   font-display: swap;

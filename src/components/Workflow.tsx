@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useId } from "react";
 
 function StepCard({ title, desc, icon }: { title: string; desc: string; icon?: React.ReactNode }) {
   return (
@@ -17,58 +17,28 @@ function StepCard({ title, desc, icon }: { title: string; desc: string; icon?: R
 }
 
 function Arrow({ onComplete, active = false }: { onComplete?: () => void; active?: boolean }) {
-  // Use a visible default path immediately; swap to fetched path if available
-  const defaultPath = "M8 30 H120 L108 20 M120 30 L108 40";
-  const [pathD, setPathD] = useState<string>(defaultPath);
-  const [viewBox, setViewBox] = useState<string>("0 0 140 60");
-
-  useEffect(() => {
-    let isActive = true;
-    fetch("/rotated-right-arrow.svg")
-      .then((res) => res.text())
-      .then((svg) => {
-        if (!isActive) return;
-        const doc = new DOMParser().parseFromString(svg, "image/svg+xml");
-        const vb = doc.documentElement.getAttribute("viewBox");
-        const path = doc.querySelector("path");
-        if (vb) setViewBox(vb);
-        if (path) {
-          const d = path.getAttribute("d");
-          if (d) setPathD(d);
-        }
-      })
-      .catch(() => {
-        // fallback to a simple arrow if fetch fails
-        setPathD("M8 30 H120 L108 20 M120 30 L108 40");
-      });
-    return () => {
-      isActive = false;
-    };
-  }, []);
+  const [hasShown, setHasShown] = useState(false);
+  const shouldShow = active || hasShown;
 
   return (
-    <motion.svg
-      width="140"
-      height="60"
-      viewBox={viewBox}
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.15 }}
+    <motion.div
+      style={{ width: 140, height: 60 }}
+      initial={{ opacity: 0, y: 20 }}
+      animate={shouldShow ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+      transition={{ duration: 0.4, ease: "easeOut" }}
+      onAnimationComplete={() => {
+        if (active && !hasShown) {
+          setHasShown(true);
+          if (onComplete) onComplete();
+        }
+      }}
     >
-      <motion.path
-        d={pathD}
-        stroke="white"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        initial={{ pathLength: active ? 0 : 1, opacity: active ? 1 : 0.9 }}
-        animate={{ pathLength: 1, opacity: 1 }}
-        transition={active ? { duration: 0.6, ease: "easeInOut" } : { duration: 0 }}
-        onAnimationComplete={() => { if (active && onComplete) onComplete(); }}
+      <img
+        src="/white-arrow.png"
+        alt="arrow"
+        style={{ width: 140, height: 60, objectFit: "contain" }}
       />
-    </motion.svg>
+    </motion.div>
   );
 }
 
@@ -121,7 +91,7 @@ export default function Workflow() {
 
   return (
     <div ref={ref} className="w-full">
-      <div ref={containerRef} className="flex items-center justify-center gap-6 md:gap-10">
+      <div ref={containerRef} className="flex flex-col items-center justify-center gap-6 md:flex-row md:gap-10">
         {/* Step 1 */}
         <motion.div
           initial={{ opacity: 0, x: -60 }}
@@ -139,14 +109,16 @@ export default function Workflow() {
           />
         </motion.div>
 
-        {/* Arrow 1 */}
-        <Arrow
-          key={`arrow1-${sequenceStep === 2 ? 'active' : 'idle'}`}
-          active={sequenceStep === 2}
-          onComplete={() => {
-            if (sequenceStep === 2) setSequenceStep(3);
-          }}
-        />
+        {/* Arrow 1 (hidden on small screens) */}
+        <div className="hidden md:block">
+          <Arrow
+            key="arrow1"
+            active={sequenceStep === 2}
+            onComplete={() => {
+              if (sequenceStep === 2) setSequenceStep(3);
+            }}
+          />
+        </div>
 
         {/* Step 2 */}
         <motion.div
@@ -164,14 +136,16 @@ export default function Workflow() {
           />
         </motion.div>
 
-        {/* Arrow 2 */}
-        <Arrow
-          key={`arrow2-${sequenceStep === 4 ? 'active' : 'idle'}`}
-          active={sequenceStep === 4}
-          onComplete={() => {
-            if (sequenceStep === 4) setSequenceStep(5);
-          }}
-        />
+        {/* Arrow 2 (hidden on small screens) */}
+        <div className="hidden md:block">
+          <Arrow
+            key="arrow2"
+            active={sequenceStep === 4}
+            onComplete={() => {
+              if (sequenceStep === 4) setSequenceStep(5);
+            }}
+          />
+        </div>
 
         {/* Step 3 */}
         <motion.div

@@ -211,7 +211,7 @@ export default function HeroScene() {
       className="h-full w-full"
       gl={{
         antialias: true,
-        alpha: true,
+        alpha: false,
         powerPreference: "high-performance",
       }}
       camera={{
@@ -222,6 +222,8 @@ export default function HeroScene() {
       }}
       dpr={[1, 2]}
     >
+      {/* Ensure black clear color when opaque */}
+      <color attach="background" args={["#000000"]} />
       <ambientLight intensity={0.4} />
       <directionalLight position={[10, 10, 5]} intensity={2} castShadow />
       <directionalLight position={[-5, 5, 3]} intensity={0.8} />
