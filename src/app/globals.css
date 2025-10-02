@@ -8,6 +8,7 @@
   font-weight: 100 900;
   font-style: normal;
   font-display: swap;
+  font-synthesis: none;
 }
 
 @font-face {
@@ -159,6 +160,11 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+  html {
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    text-size-adjust: 100%;
   }
 }
 
