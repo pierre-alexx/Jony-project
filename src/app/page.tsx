@@ -163,7 +163,7 @@ export default function LandingPage() {
 
         <div className="mx-auto max-w-6xl px-4 sm:px-6 pt-24 sm:pt-28 pb-16 sm:pb-20">
           {/* Full-width title block */}
-          <motion.div style={{ opacity }} className="relative z-20 mx-auto max-w-3xl text-center -top-1">
+          <motion.div style={{ opacity }} className="relative z-20 mx-auto max-w-3xl text-center -top-3">
             <p className="text-xs sm:text-sm uppercase tracking-[0.25em] sm:tracking-[0.3em] text-white/80">The first AI agent with <span className="text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]">taste</span></p>
             <h1 className="mt-3 sm:mt-4 text-balance text-4xl sm:text-6xl font-semibold leading-tight sm:leading-[1.05] md:text-7xl" style={{ fontFamily: 'SentinelBlack, ui-sans-serif, system-ui' }}>
               Design quality UI. From a prompt.
