@@ -3,16 +3,149 @@
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { useEffect, useRef, useState, useId } from "react";
+import { Canvas, useFrame } from "@react-three/fiber";
+import * as THREE from "three";
 
 function StepCard({ title, desc, icon }: { title: string; desc: string; icon?: React.ReactNode }) {
   return (
-    <div className="relative p-8 rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-sm shadow-lg text-white w-[18rem] text-center">
-      <div className="flex items-center justify-center w-16 h-16 rounded-xl bg-white/80 border border-white/30 shadow-sm mb-4 mx-auto text-neutral-700">
-        {icon}
-      </div>
-      <h3 className="font-semibold text-lg" style={{ fontFamily: 'SentinelMedium, ui-sans-serif, system-ui' }}>{title}</h3>
-      <p className="mt-2 text-sm text-white/70" style={{ fontFamily: 'SentinelBook, ui-sans-serif, system-ui' }}>{desc}</p>
+    <div className="relative p-10 rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-sm shadow-lg text-white w-[22rem] text-center">
+      <div className="mx-auto mb-5 w-20 h-20">{icon}</div>
+      <h3 className="font-semibold text-xl" style={{ fontFamily: 'SentinelMedium, ui-sans-serif, system-ui' }}>{title}</h3>
+      <p className="mt-3 text-base text-white/70" style={{ fontFamily: 'SentinelBook, ui-sans-serif, system-ui' }}>{desc}</p>
     </div>
+  );
+}
+
+function StartIcon3D() {
+  const group = useRef<THREE.Group>(null);
+  const t = useRef(0);
+  useFrame(() => {
+    const g = group.current;
+    if (!g) return;
+    t.current += 0.02;
+    g.position.y = Math.sin(t.current) * 0.08;
+  });
+
+  return (
+    <group ref={group}>
+      {/* Bubbly cross using rounded capsules */}
+      <mesh castShadow receiveShadow rotation={[0, 0, 0]}>
+        <capsuleGeometry args={[0.18, 0.64, 16, 32]} />
+        <meshPhysicalMaterial color="#ffffff" metalness={0.18} roughness={0.14} clearcoat={1} clearcoatRoughness={0.02} envMapIntensity={1.8} emissive="#ffffff" emissiveIntensity={0.14} />
+      </mesh>
+      <mesh castShadow receiveShadow rotation={[0, 0, Math.PI / 2]}>
+        <capsuleGeometry args={[0.18, 0.64, 16, 32]} />
+        <meshPhysicalMaterial color="#ffffff" metalness={0.18} roughness={0.14} clearcoat={1} clearcoatRoughness={0.02} envMapIntensity={1.8} emissive="#ffffff" emissiveIntensity={0.14} />
+      </mesh>
+    </group>
+  );
+}
+
+function CloudIcon3D() {
+  const group = useRef<THREE.Group>(null);
+  const t = useRef(0);
+  useFrame(() => {
+    const g = group.current;
+    if (!g) return;
+    t.current += 0.02;
+    g.position.y = Math.sin(t.current) * 0.08;
+  });
+
+  return (
+    <group ref={group}>
+      {/* Cloud composed of soft overlapping spheres (front-left, top-center, front-right, bottom-center) */}
+      <mesh castShadow receiveShadow position={[-0.32, 0.0, 0]}>
+        <sphereGeometry args={[0.30, 48, 48]} />
+        <meshPhysicalMaterial color="#ffffff" roughness={0.24} metalness={0.06} clearcoat={1} clearcoatRoughness={0.04} envMapIntensity={1.5} emissive="#ffffff" emissiveIntensity={0.10} />
+      </mesh>
+      <mesh castShadow receiveShadow position={[0, 0.16, -0.02]}>
+        <sphereGeometry args={[0.40, 48, 48]} />
+        <meshPhysicalMaterial color="#ffffff" roughness={0.24} metalness={0.06} clearcoat={1} clearcoatRoughness={0.04} envMapIntensity={1.5} emissive="#ffffff" emissiveIntensity={0.10} />
+      </mesh>
+      <mesh castShadow receiveShadow position={[0.34, 0.0, 0]}>
+        <sphereGeometry args={[0.30, 48, 48]} />
+        <meshPhysicalMaterial color="#ffffff" roughness={0.24} metalness={0.06} clearcoat={1} clearcoatRoughness={0.04} envMapIntensity={1.5} emissive="#ffffff" emissiveIntensity={0.10} />
+      </mesh>
+      <mesh castShadow receiveShadow position={[0, -0.10, 0.02]}>
+        <sphereGeometry args={[0.26, 48, 48]} />
+        <meshPhysicalMaterial color="#ffffff" roughness={0.24} metalness={0.06} clearcoat={1} clearcoatRoughness={0.04} envMapIntensity={1.5} emissive="#ffffff" emissiveIntensity={0.10} />
+      </mesh>
+    </group>
+  );
+}
+
+function InspirationBulb3D() {
+  const group = useRef<THREE.Group>(null);
+  const t = useRef(0);
+  useFrame(() => {
+    const g = group.current;
+    if (!g) return;
+    t.current += 0.02;
+    g.position.y = Math.sin(t.current) * 0.08;
+  });
+
+  return (
+    <group ref={group}>
+      <mesh castShadow receiveShadow position={[0, 0.05, 0]}>
+        <sphereGeometry args={[0.42, 48, 48]} />
+        <meshPhysicalMaterial color="#ffffff" roughness={0.1} metalness={0.1} transmission={0.6} thickness={0.6} clearcoat={1} clearcoatRoughness={0.02} emissive="#ffffff" emissiveIntensity={0.18} envMapIntensity={1.9} />
+      </mesh>
+      <mesh castShadow receiveShadow position={[0, -0.38, 0]}>
+        <cylinderGeometry args={[0.18, 0.2, 0.22, 24]} />
+        <meshPhysicalMaterial color="#ffffff" metalness={0.15} roughness={0.18} clearcoat={1} clearcoatRoughness={0.04} emissive="#ffffff" emissiveIntensity={0.08} />
+      </mesh>
+      <mesh position={[0, -0.26, 0]}>
+        <torusGeometry args={[0.2, 0.02, 16, 48]} />
+        <meshPhysicalMaterial color="#ffffff" roughness={0.14} metalness={0.1} clearcoat={1} clearcoatRoughness={0.03} emissive="#ffffff" emissiveIntensity={0.08} />
+      </mesh>
+    </group>
+  );
+}
+
+function CreateIcon3D() {
+  const group = useRef<THREE.Group>(null);
+  const t = useRef(0);
+  useFrame(() => {
+    const g = group.current;
+    if (!g) return;
+    t.current += 0.02;
+    g.position.y = Math.sin(t.current) * 0.08;
+  });
+
+  return (
+    <group ref={group}>
+      {/* Bubbly heart built from rounded primitives */}
+      <mesh castShadow receiveShadow position={[-0.22, 0.08, 0]}>
+        <sphereGeometry args={[0.3, 48, 48]} />
+        <meshPhysicalMaterial color="#ffd6de" metalness={0.2} roughness={0.15} clearcoat={1} clearcoatRoughness={0.04} envMapIntensity={1.5} />
+      </mesh>
+      <mesh castShadow receiveShadow position={[0.22, 0.08, 0]}>
+        <sphereGeometry args={[0.3, 48, 48]} />
+        <meshPhysicalMaterial color="#ffd6de" metalness={0.2} roughness={0.15} clearcoat={1} clearcoatRoughness={0.04} envMapIntensity={1.5} />
+      </mesh>
+      <mesh castShadow receiveShadow rotation={[Math.PI / 2, 0, 0]} position={[0, -0.28, 0]}>
+        <capsuleGeometry args={[0.22, 0.42, 16, 32]} />
+        <meshPhysicalMaterial color="#ffd6de" metalness={0.2} roughness={0.15} clearcoat={1} clearcoatRoughness={0.04} envMapIntensity={1.5} />
+      </mesh>
+    </group>
+  );
+}
+
+function MiniScene({ variant }: { variant: "start" | "cloud" | "bulb" }) {
+  return (
+    <Canvas
+      gl={{ antialias: true, powerPreference: "high-performance", alpha: true }}
+      camera={{ position: [0, 0, 2.2], fov: 45 }}
+      dpr={[1, 2]}
+      className="w-full h-full"
+    >
+      <ambientLight intensity={0.9} />
+      <directionalLight position={[2, 2, 3]} intensity={1.6} />
+      <directionalLight position={[-2, 1, 1]} intensity={0.6} />
+      {variant === "start" && <StartIcon3D />}
+      {variant === "cloud" && <CloudIcon3D />}
+      {variant === "bulb" && <InspirationBulb3D />}
+    </Canvas>
   );
 }
 
@@ -105,7 +238,7 @@ export default function Workflow() {
           <StepCard
             title="Start your project"
             desc="Create from scratch or begin with an existing project. Jony adapts to your workflow."
-            icon={<svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4v16m8-8H4" /></svg>}
+            icon={<div className="w-full h-full"><MiniScene variant="start" /></div>}
           />
         </motion.div>
 
@@ -132,7 +265,7 @@ export default function Workflow() {
           <StepCard
             title="Share your inspiration"
             desc="Upload images, files, or URLs. Jony learns from your references to understand your taste."
-            icon={<svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" /></svg>}
+            icon={<div className="w-full h-full"><MiniScene variant="cloud" /></div>}
           />
         </motion.div>
 
@@ -162,7 +295,7 @@ export default function Workflow() {
           <StepCard
             title="Create something beautiful"
             desc="Ask Jony to design or improve your UI. Iterate in chat until it matches your vision perfectly."
-            icon={<svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>}
+            icon={<div className="w-full h-full"><MiniScene variant="bulb" /></div>}
           />
         </motion.div>
       </div>
